@@ -1,0 +1,34 @@
+﻿@model List<Producer>
+@{
+    ViewData["Title"] = "Producers";
+}
+
+<h1 class="text-center">Producers</h1>
+
+<div>
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:33%">Id</td>
+                <td style="width:33%">Name</td>
+                <td style="width:33%" ></td>
+            </tr>
+            @foreach (var producer in Model)
+            {
+                <tr>
+                    <td style="width:33%">@producer.Id</td>
+                    <td style="width:33%">@producer.Name</td>
+                    <td style="width:33%"><a class="btn btn-danger" asp-controller="ProducerTable" asp-action="Delete" asp-route-id="@producer.Id">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="mt-4">
+        <a 
+           class="nav-link text-white text-light btn btn-dark"
+           style="width:30%; margin:auto"
+           asp-area=""
+           asp-controller="ProducerTable"
+           asp-action="Create">Create</a>
+    </div>
+</div>
