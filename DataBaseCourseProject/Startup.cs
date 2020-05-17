@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataBaseCourseProject.ComponentInterfaces;
 using DataBaseCourseProject.Components;
+using DataBaseCourseProject.Models;
 using DataBaseCourseProject.ServiceInterfaces;
 using DataBaseCourseProject.Services;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +29,8 @@ namespace DataBaseCourseProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<IProducerTableService, ProducerTableService>();
+            services.AddTransient<ITableService<Producer>, ProducerTableService>();
+            services.AddTransient<ITableService<User>, UserTableService>();
             services.AddTransient<IOracleComponent, OracleComponent>();
         }
 

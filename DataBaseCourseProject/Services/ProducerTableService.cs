@@ -7,7 +7,7 @@ using System.Data;
 
 namespace DataBaseCourseProject.Services
 {
-    public class ProducerTableService : IProducerTableService
+    public class ProducerTableService : ITableService<Producer>
     {
         private readonly IOracleComponent oracleComponent;
 
@@ -36,22 +36,28 @@ namespace DataBaseCourseProject.Services
             return producerList;
         }
 
-        public void CreateProducer(ProducerCreateModel model)
+        public void Create(Producer model)
         {
             var connection = oracleComponent.GetOpenConnection();
             var command = oracleComponent.GetCommand(connection, "AddProducer", CommandType.StoredProcedure);
             oracleComponent.AddParameter(command, "NameVar", OracleDbType.Varchar2, model.Name);
             command.ExecuteNonQuery();
+            command.Dispose();
             connection.Close();
         }
 
-        public void DeleteProducer(int id)
+        public void Delete(int id)
         {
             var connection = oracleComponent.GetOpenConnection();
             var command = oracleComponent.GetCommand(connection, "DeleteProducer", CommandType.StoredProcedure);
             oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, id);
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public Producer GetEmpty()
+        {
+            return new Producer();
         }
     }
 }
