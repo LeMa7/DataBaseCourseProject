@@ -1,0 +1,40 @@
+﻿@model List<User>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1 class="text-center">Users</h1>
+
+<div>
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:14%">Id</td>
+                <td style="width:14%">First Name</td>
+                <td style="width:14%">Last Name</td>
+                <td style="width:14%">Middle Name</td>
+                <td style="width:14%">Email</td>
+                <td style="width:14%">Phone Number</td>
+                <td style="width:14%"></td>
+            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td style="width:14%">@user.Id</td>
+                    <td style="width:14%">@user.FirstName</td>
+                    <td style="width:14%">@user.LastName</td>
+                    <td style="width:14%">@user.MiddleName</td>
+                    <td style="width:14%">@user.Email</td>
+                    <td style="width:14%">@user.PhoneNumber</td>
+                    <td style="width:14%"><a class="btn btn-danger" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="mt-4">
+        <a class="nav-link text-white text-light btn btn-dark btn-create"
+           asp-area=""
+           asp-controller="UserTable"
+           asp-action="Create">Create</a>
+    </div>
+</div>
