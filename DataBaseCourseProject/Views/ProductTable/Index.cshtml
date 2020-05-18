@@ -1,0 +1,42 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1 class="text-center">Products</h1>
+
+<div>
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:12%">Id</td>
+                <td style="width:12%">Name</td>
+                <td style="width:12%">Description</td>
+                <td style="width:12%">SubcategoryId</td>
+                <td style="width:12%">ProducerId</td>
+                <td style="width:12%">Price</td>
+                <td style="width:12%">Quantity</td>
+                <td style="width:12%"></td>
+            </tr>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td style="width:12%">@product.Id</td>
+                    <td style="width:12%">@product.Name</td>
+                    <td style="width:12%">@product.Description</td>
+                    <td style="width:12%">@product.SubcategoryId</td>
+                    <td style="width:12%">@product.ProducerId</td>
+                    <td style="width:12%">@product.Price</td>
+                    <td style="width:12%">@product.Quantity</td>
+                    <td style="width:12%"><a class="btn btn-danger" asp-controller="ProductTable" asp-action="Delete" asp-route-id="@product.Id">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="mt-4">
+        <a class="nav-link text-white text-light btn btn-dark btn-create"
+           asp-area=""
+           asp-controller="ProductTable"
+           asp-action="Create">Create</a>
+    </div>
+</div>

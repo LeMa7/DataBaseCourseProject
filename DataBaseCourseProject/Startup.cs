@@ -28,6 +28,7 @@ namespace DataBaseCourseProject
             services.AddTransient<ITableService<User>, UserTableService>();
             services.AddTransient<ITableService<Category>, CategoryTableService>();
             services.AddTransient<ITableService<Subcategory>, SubcategoryTableService>();
+            services.AddTransient<ITableService<Product>, ProductTableService>();
             services.AddTransient<IOracleComponent, OracleComponent>();
         }
 

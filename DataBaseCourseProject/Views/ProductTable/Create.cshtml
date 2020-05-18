@@ -1,0 +1,37 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center">Create product</h1>
+
+<form asp-controller="ProductTable" asp-action="Create">
+    <div class="form-group mt-2 form-element">
+        <label asp-for="Name" class="mb-0">Name</label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="Description" class="mb-0">Description</label>
+        <input type="text" asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="SubcategoryId" class="mb-0">Subcategory Id</label>
+        <input type="number" asp-for="SubcategoryId" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="ProducerId" class="mb-0">Producer Id</label>
+        <input type="number" asp-for="ProducerId" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="Price" class="mb-0">Price</label>
+        <input type="number" asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="Quantity" class="mb-0">Quantity</label>
+        <input type="number" asp-for="Quantity" class="form-control" />
+    </div>
+    <div class="form-group mt-4 text-center">
+        <input type="submit" value="Create" class="btn-create btn btn-dark text-light" />
+    </div>
+</form>
