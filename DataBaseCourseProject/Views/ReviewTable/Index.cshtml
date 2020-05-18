@@ -1,0 +1,38 @@
+﻿@model List<Review>
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<h1 class="text-center">Reviews</h1>
+
+<div>
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:16%">Id</td>
+                <td style="width:16%">ProductId</td>
+                <td style="width:16%">UserId</td>
+                <td style="width:16%">Rating</td>
+                <td style="width:16%">Comments</td>
+                <td style="width:16%"></td>
+            </tr>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td style="width:16%">@review.Id</td>
+                    <td style="width:16%">@review.ProductId</td>
+                    <td style="width:16%">@review.UserId</td>
+                    <td style="width:16%">@review.Rating</td>
+                    <td style="width:16%">@review.Comments</td>
+                    <td style="width:16%"><a class="btn btn-danger" asp-controller="ReviewTable" asp-action="Delete" asp-route-id="@review.Id">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="mt-4">
+        <a class="nav-link text-white text-light btn btn-dark btn-create"
+           asp-area=""
+           asp-controller="ReviewTable"
+           asp-action="Create">Create</a>
+    </div>
+</div>
