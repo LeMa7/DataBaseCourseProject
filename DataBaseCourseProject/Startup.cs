@@ -26,6 +26,7 @@ namespace DataBaseCourseProject
             services.AddControllersWithViews();
             services.AddTransient<ITableService<Producer>, ProducerTableService>();
             services.AddTransient<ITableService<User>, UserTableService>();
+            services.AddTransient<ITableService<Category>, CategoryTableService>();
             services.AddTransient<IOracleComponent, OracleComponent>();
         }
 
