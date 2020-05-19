@@ -23,7 +23,7 @@
                     <td style="width:16%">@review.ProductId</td>
                     <td style="width:16%">@review.UserId</td>
                     <td style="width:16%">@review.Rating</td>
-                    <td style="width:16%">@review.Comments</td>
+                    <td style="width:16%;" class="comments">@review.Comments</td>
                     <td style="width:16%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ReviewTable" asp-action="Delete" asp-route-id="@review.Id">Delete</a></td>
                 </tr>
             }

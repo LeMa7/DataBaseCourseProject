@@ -82,3 +82,8 @@ body {
     width: 50%;
     margin: auto;
 }
+
+td.comments {
+    overflow-wrap: break-word;
+    max-width: 50px;
+}

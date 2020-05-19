@@ -1,4 +1,6 @@
-﻿namespace DataBaseCourseProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DataBaseCourseProject.Models
 {
     public class Review
     {
@@ -10,6 +12,7 @@
 
         public int? Rating { get; set; }
 
+        [StringLength(300)]
         public string Comments { get; set; }
     }
 }
