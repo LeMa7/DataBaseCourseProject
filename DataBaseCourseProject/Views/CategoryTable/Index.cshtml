@@ -15,10 +15,10 @@
             </tr>
             @foreach (var category in Model)
             {
-                <tr>
+                <tr class="border-bottom">
                     <td style="width:33%">@category.Id</td>
                     <td style="width:33%">@category.Name</td>
-                    <td style="width:33%"><a class="btn btn-danger" asp-controller="CategoryTable" asp-action="Delete" asp-route-id="@category.Id">Delete</a></td>
+                    <td style="width:33%"><a class="btn btn-danger mt-1 mb-1" asp-controller="CategoryTable" asp-action="Delete" asp-route-id="@category.Id">Delete</a></td>
                 </tr>
             }
         </table>

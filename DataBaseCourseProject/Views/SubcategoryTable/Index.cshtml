@@ -9,18 +9,18 @@
     <div>
         <table style="width:100%" class="text-center">
             <tr>
-                <td style="width:33%">Id</td>
-                <td style="width:33%">Name</td>
-                <td style="width:33%">CategoryId</td>
-                <td style="width:33%"></td>
+                <td style="width:25%">Id</td>
+                <td style="width:25%">Name</td>
+                <td style="width:25%">CategoryId</td>
+                <td style="width:25%"></td>
             </tr>
             @foreach (var subcategory in Model)
             {
-                <tr>
-                    <td style="width:33%">@subcategory.Id</td>
-                    <td style="width:33%">@subcategory.Name</td>
-                    <td style="width:33%">@subcategory.CategoryId</td>
-                    <td style="width:33%"><a class="btn btn-danger" asp-controller="SubcategoryTable" asp-action="Delete" asp-route-id="@subcategory.Id">Delete</a></td>
+                <tr class="border-bottom">
+                    <td style="width:25%">@subcategory.Id</td>
+                    <td style="width:25%">@subcategory.Name</td>
+                    <td style="width:25%">@subcategory.CategoryId</td>
+                    <td style="width:25%"><a class="btn btn-danger mt-1 mb-1" asp-controller="SubcategoryTable" asp-action="Delete" asp-route-id="@subcategory.Id">Delete</a></td>
                 </tr>
             }
         </table>

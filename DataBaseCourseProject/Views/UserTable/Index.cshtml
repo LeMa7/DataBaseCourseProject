@@ -19,14 +19,14 @@
             </tr>
             @foreach (var user in Model)
             {
-                <tr>
+                <tr class="border-bottom">
                     <td style="width:14%">@user.Id</td>
                     <td style="width:14%">@user.FirstName</td>
                     <td style="width:14%">@user.LastName</td>
                     <td style="width:14%">@user.MiddleName</td>
                     <td style="width:14%">@user.Email</td>
                     <td style="width:14%">@user.PhoneNumber</td>
-                    <td style="width:14%"><a class="btn btn-danger" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+                    <td style="width:14%"><a class="btn btn-danger mt-1 mb-1" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
                 </tr>
             }
         </table>

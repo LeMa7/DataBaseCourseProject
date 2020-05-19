@@ -20,7 +20,7 @@
             </tr>
             @foreach (var product in Model)
             {
-                <tr>
+                <tr class="border-bottom">
                     <td style="width:12%">@product.Id</td>
                     <td style="width:12%">@product.Name</td>
                     <td style="width:12%">@product.Description</td>
@@ -28,7 +28,7 @@
                     <td style="width:12%">@product.ProducerId</td>
                     <td style="width:12%">@product.Price</td>
                     <td style="width:12%">@product.Quantity</td>
-                    <td style="width:12%"><a class="btn btn-danger" asp-controller="ProductTable" asp-action="Delete" asp-route-id="@product.Id">Delete</a></td>
+                    <td style="width:12%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ProductTable" asp-action="Delete" asp-route-id="@product.Id">Delete</a></td>
                 </tr>
             }
         </table>

@@ -1,0 +1,29 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center">Create order</h1>
+
+<form asp-controller="OrderTable" asp-action="Create">
+    <div class="form-group mt-2 form-element">
+        <label asp-for="UserId" class="mb-0">User Id</label>
+        <input type="text" asp-for="UserId" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="OrderDate" class="mb-0">Order Date</label>
+        <input type="text" asp-for="OrderDate" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="ShipDate" class="mb-0">Ship Date</label>
+        <input type="text" asp-for="ShipDate" class="form-control" />
+    </div>
+    <div class="form-group mt-2 form-element">
+        <label asp-for="Adress" class="mb-0">Adress</label>
+        <input type="text" asp-for="Adress" class="form-control" />
+    </div>
+    <div class="form-group mt-4 text-center">
+        <input type="submit" value="Create" class="btn-create btn btn-dark text-light" />
+    </div>
+</form>

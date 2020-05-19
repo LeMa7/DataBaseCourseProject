@@ -15,10 +15,10 @@
             </tr>
             @foreach (var producer in Model)
             {
-                <tr>
+                <tr class="border-bottom">
                     <td style="width:33%">@producer.Id</td>
                     <td style="width:33%">@producer.Name</td>
-                    <td style="width:33%"><a class="btn btn-danger" asp-controller="ProducerTable" asp-action="Delete" asp-route-id="@producer.Id">Delete</a></td>
+                    <td style="width:33%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ProducerTable" asp-action="Delete" asp-route-id="@producer.Id">Delete</a></td>
                 </tr>
             }
         </table>
