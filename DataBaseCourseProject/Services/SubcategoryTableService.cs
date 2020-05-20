@@ -57,6 +57,37 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(Subcategory model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateSubcategory", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.Id);
+            oracleComponent.AddParameter(command, "NameVar", OracleDbType.Varchar2, model.Name);
+            oracleComponent.AddParameter(command, "CategoryIdVar", OracleDbType.Int32, model.CategoryId);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public Subcategory GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from subcategories where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var subcategory = new Subcategory();
+            while (dataReader.Read())
+            {
+                subcategory.Id = dataReader.GetInt32(0);
+                subcategory.Name = dataReader.GetString(1);
+                subcategory.CategoryId = dataReader.GetInt32(2);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return subcategory;
+        }
+
         public Subcategory GetEmpty()
         {
             return new Subcategory();

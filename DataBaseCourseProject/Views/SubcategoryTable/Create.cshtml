@@ -1,12 +1,13 @@
 ﻿@model Subcategory
 
 @{
-    ViewData["Title"] = "Create";
+    var action = Model.Id == null ? "Create" : "Update";
+    ViewData["Title"] = action;
 }
 
-<h1 class="text-center">Create subcategory</h1>
+<h1 class="text-center">@action subcategory</h1>
 
-<form asp-controller="SubcategoryTable" asp-action="Create">
+<form asp-controller="SubcategoryTable" asp-action="@action">
     <div class="form-group mt-2 form-element">
         <label asp-for="Name" class="mb-0">Name</label>
         <input type="text" asp-for="Name" class="form-control" />
@@ -16,6 +17,6 @@
         <input type="number" asp-for="CategoryId" class="form-control" />
     </div>
     <div class="form-group mt-4 text-center">
-        <input type="submit" value="Create" class="btn-create btn btn-dark text-light" />
+        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
     </div>
 </form>

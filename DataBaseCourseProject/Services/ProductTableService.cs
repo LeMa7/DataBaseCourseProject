@@ -65,6 +65,45 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(Product model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateProduct", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.Id);
+            oracleComponent.AddParameter(command, "NameVar", OracleDbType.Varchar2, model.Name);
+            oracleComponent.AddParameter(command, "DescriptionVar", OracleDbType.Varchar2, model.Description);
+            oracleComponent.AddParameter(command, "SubcategoryIdVar", OracleDbType.Varchar2, model.SubcategoryId);
+            oracleComponent.AddParameter(command, "ProducerIdVar", OracleDbType.Varchar2, model.ProducerId);
+            oracleComponent.AddParameter(command, "PriceVar", OracleDbType.Varchar2, model.Price);
+            oracleComponent.AddParameter(command, "QuantityVar", OracleDbType.Varchar2, model.Quantity);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public Product GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from products where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var product = new Product();
+            while (dataReader.Read())
+            {
+                product.Id = dataReader.GetInt32(0);
+                product.Name = dataReader.GetString(1);
+                product.Description = dataReader.GetString(2);
+                product.SubcategoryId = dataReader.GetInt32(3);
+                product.ProducerId = dataReader.GetInt32(4);
+                product.Price = dataReader.GetInt32(5);
+                product.Quantity = dataReader.GetInt32(6);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return product;
+        }
+
         public Product GetEmpty()
         {
             return new Product();

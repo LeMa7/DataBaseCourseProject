@@ -9,22 +9,24 @@
     <div>
         <table style="width:100%" class="text-center">
             <tr>
-                <td style="width:16%">Id</td>
-                <td style="width:16%">ProductId</td>
-                <td style="width:16%">UserId</td>
-                <td style="width:16%">Rating</td>
-                <td style="width:16%">Comments</td>
-                <td style="width:16%"></td>
+                <td style="width:14%">Id</td>
+                <td style="width:14%">ProductId</td>
+                <td style="width:14%">UserId</td>
+                <td style="width:14%">Rating</td>
+                <td style="width:14%">Comments</td>
+                <td style="width:14%"></td>
+                <td style="width:14%"></td>
             </tr>
             @foreach (var review in Model)
             {
                 <tr class="border-bottom">
-                    <td style="width:16%">@review.Id</td>
-                    <td style="width:16%">@review.ProductId</td>
-                    <td style="width:16%">@review.UserId</td>
-                    <td style="width:16%">@review.Rating</td>
-                    <td style="width:16%;" class="comments">@review.Comments</td>
-                    <td style="width:16%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ReviewTable" asp-action="Delete" asp-route-id="@review.Id">Delete</a></td>
+                    <td style="width:14%">@review.Id</td>
+                    <td style="width:14%">@review.ProductId</td>
+                    <td style="width:14%">@review.UserId</td>
+                    <td style="width:14%">@review.Rating</td>
+                    <td style="width:14%;" class="comments">@review.Comments</td>
+                    <td style="width:14%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ReviewTable" asp-action="Delete" asp-route-id="@review.Id">Delete</a></td>
+                    <td style="width:14%"><a class="btn btn-warning mt-1 mb-1" asp-controller="ReviewTable" asp-action="Update" asp-route-id="@review.Id">Update</a></td>
                 </tr>
             }
         </table>

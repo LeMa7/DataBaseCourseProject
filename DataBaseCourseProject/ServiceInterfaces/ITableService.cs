@@ -10,6 +10,10 @@ namespace DataBaseCourseProject.ServiceInterfaces
 
         void Delete(int id);
 
+        void Update(T model);
+
         T GetEmpty();
+
+        T GetById(int id);
     }
 }

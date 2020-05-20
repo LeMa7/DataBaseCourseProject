@@ -55,6 +55,35 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(Category model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateCategory", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.Id);
+            oracleComponent.AddParameter(command, "NameVar", OracleDbType.Varchar2, model.Name);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public Category GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from categories where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var category = new Category();
+            while (dataReader.Read())
+            {
+                category.Id = dataReader.GetInt32(0);
+                category.Name = dataReader.GetString(1);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return category;
+        }
+
         public Category GetEmpty()
         {
             return new Category();

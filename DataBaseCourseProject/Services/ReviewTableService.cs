@@ -61,6 +61,41 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(Review model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateReview", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.ProductId);
+            oracleComponent.AddParameter(command, "ProductIdVar", OracleDbType.Int32, model.ProductId);
+            oracleComponent.AddParameter(command, "UserIdVar", OracleDbType.Int32, model.UserId);
+            oracleComponent.AddParameter(command, "RatingVar", OracleDbType.Int32, model.Rating);
+            oracleComponent.AddParameter(command, "CommentsVar", OracleDbType.Varchar2, model.Comments);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public Review GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from reviews where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var review = new Review();
+            while (dataReader.Read())
+            {
+                review.Id = dataReader.GetInt32(0);
+                review.ProductId = dataReader.GetInt32(1);
+                review.UserId = dataReader.GetInt32(2);
+                review.Rating = dataReader.GetInt32(3);
+                review.Comments = dataReader.GetString(4);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return review;
+        }
+
         public Review GetEmpty()
         {
             return new Review();

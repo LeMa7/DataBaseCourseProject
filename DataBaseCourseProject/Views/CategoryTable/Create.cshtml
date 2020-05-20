@@ -1,17 +1,18 @@
 ﻿@model Category
 
 @{
-    ViewData["Title"] = "Create";
+    var action = Model.Id == null ? "Create" : "Update";
+    ViewData["Title"] = action;
 }
 
-<h1 class="text-center">Create category</h1>
+<h1 class="text-center">@action category</h1>
 
-<form asp-controller="CategoryTable" asp-action="Create">
+<form asp-controller="CategoryTable" asp-action="@action">
     <div class="form-group mt-2 form-element">
         <label asp-for="Name" class="mb-0">Name</label><span class="text-danger">*</span>
         <input type="text" asp-for="Name" class="form-control" />
     </div>
     <div class="form-group mt-4 text-center">
-        <input type="submit" value="Create" class="btn-create btn btn-dark text-light" />
+        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
     </div>
 </form>

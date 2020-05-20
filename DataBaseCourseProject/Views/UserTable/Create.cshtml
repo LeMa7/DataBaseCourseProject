@@ -1,12 +1,13 @@
 ﻿@model User
 
 @{
-    ViewData["Title"] = "Create";
+    var action = Model.Id == null ? "Create" : "Update";
+    ViewData["Title"] = action;
 }
 
-<h1 class="text-center">Create User</h1>
+<h1 class="text-center">@action User</h1>
 
-<form asp-controller="UserTable" asp-action="Create">
+<form asp-controller="UserTable" asp-action="@action">
     <div class="form-group form-element">
         <label asp-for="FirstName" class="mb-0">First Name</label><span class="text-danger">*</span>
         <input type="text" asp-for="FirstName" class="form-control" />
@@ -28,6 +29,6 @@
         <input type="text" asp-for="PhoneNumber" class="form-control" />
     </div>
     <div class="form-group mt-4 text-center">
-        <input type="submit" value="Create" class="btn btn-dark text-light btn-create"/>
+        <input type="submit" value="@action" class="btn btn-dark text-light btn-create"/>
     </div>
 </form>

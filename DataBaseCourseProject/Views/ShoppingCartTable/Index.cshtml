@@ -9,16 +9,18 @@
     <div>
         <table style="width:100%" class="text-center">
             <tr>
-                <td style="width:33%">Id</td>
-                <td style="width:33%">User Id</td>
-                <td style="width:33%"></td>
+                <td style="width:25%">Id</td>
+                <td style="width:25%">User Id</td>
+                <td style="width:25%"></td>
+                <td style="width:25%"></td>
             </tr>
             @foreach (var shoppingCart in Model)
             {
                 <tr class="border-bottom">
-                    <td style="width:33%">@shoppingCart.Id</td>
-                    <td style="width:33%">@shoppingCart.UserId</td>
-                    <td style="width:33%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Delete" asp-route-id="@shoppingCart.Id">Delete</a></td>
+                    <td style="width:25%">@shoppingCart.Id</td>
+                    <td style="width:25%">@shoppingCart.UserId</td>
+                    <td style="width:25%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Delete" asp-route-id="@shoppingCart.Id">Delete</a></td>
+                    <td style="width:25%"><a class="btn btn-warning mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Update" asp-route-id="@shoppingCart.Id">Update</a></td>
                 </tr>
             }
         </table>

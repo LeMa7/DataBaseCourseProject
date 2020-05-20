@@ -42,9 +42,9 @@ namespace DataBaseCourseProject.Services
         {
             var connection = oracleComponent.GetOpenConnection();
             var command = oracleComponent.GetCommand(connection, "AddOrderDetails", CommandType.StoredProcedure);
-            oracleComponent.AddParameter(command, "OrderIdVar", OracleDbType.Varchar2, model.OrderId);
-            oracleComponent.AddParameter(command, "ProductIdVar", OracleDbType.Varchar2, model.ProductId);
-            oracleComponent.AddParameter(command, "QuantityVar", OracleDbType.Varchar2, model.Quantity);
+            oracleComponent.AddParameter(command, "OrderIdVar", OracleDbType.Int32, model.OrderId);
+            oracleComponent.AddParameter(command, "ProductIdVar", OracleDbType.Int32, model.ProductId);
+            oracleComponent.AddParameter(command, "QuantityVar", OracleDbType.Int32, model.Quantity);
             command.ExecuteNonQuery();
             command.Dispose();
             connection.Close();
@@ -57,6 +57,39 @@ namespace DataBaseCourseProject.Services
             oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, id);
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public void Update(OrderDetails model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateOrderDetails", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.Id);
+            oracleComponent.AddParameter(command, "OrderIdVar", OracleDbType.Int32, model.OrderId);
+            oracleComponent.AddParameter(command, "ProductIdVar", OracleDbType.Int32, model.ProductId);
+            oracleComponent.AddParameter(command, "QuantityVar", OracleDbType.Int32, model.Quantity);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public OrderDetails GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from orderDetails where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var orderDetails = new OrderDetails();
+            while (dataReader.Read())
+            {
+                orderDetails.Id = dataReader.GetInt32(0);
+                orderDetails.OrderId = dataReader.GetInt32(1);
+                orderDetails.ProductId = dataReader.GetInt32(2);
+                orderDetails.Quantity = dataReader.GetInt32(3);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return orderDetails;
         }
 
         public OrderDetails GetEmpty()

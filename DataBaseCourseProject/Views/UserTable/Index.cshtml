@@ -9,24 +9,26 @@
     <div>
         <table style="width:100%" class="text-center">
             <tr>
-                <td style="width:14%">Id</td>
-                <td style="width:14%">First Name</td>
-                <td style="width:14%">Last Name</td>
-                <td style="width:14%">Middle Name</td>
-                <td style="width:14%">Email</td>
-                <td style="width:14%">Phone Number</td>
-                <td style="width:14%"></td>
+                <td style="width:12%">Id</td>
+                <td style="width:12%">First Name</td>
+                <td style="width:12%">Last Name</td>
+                <td style="width:12%">Middle Name</td>
+                <td style="width:12%">Email</td>
+                <td style="width:12%">Phone Number</td>
+                <td style="width:12%"></td>
+                <td style="width:12%"></td>
             </tr>
             @foreach (var user in Model)
             {
                 <tr class="border-bottom">
-                    <td style="width:14%">@user.Id</td>
-                    <td style="width:14%">@user.FirstName</td>
-                    <td style="width:14%">@user.LastName</td>
-                    <td style="width:14%">@user.MiddleName</td>
-                    <td style="width:14%">@user.Email</td>
-                    <td style="width:14%">@user.PhoneNumber</td>
-                    <td style="width:14%"><a class="btn btn-danger mt-1 mb-1" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+                    <td style="width:12%">@user.Id</td>
+                    <td style="width:12%">@user.FirstName</td>
+                    <td style="width:12%">@user.LastName</td>
+                    <td style="width:12%">@user.MiddleName</td>
+                    <td style="width:12%">@user.Email</td>
+                    <td style="width:12%">@user.PhoneNumber</td>
+                    <td style="width:12%"><a class="btn btn-danger mt-1 mb-1" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+                    <td style="width:12%"><a class="btn btn-warning mt-1 mb-1" asp-controller="UserTable" asp-action="Update" asp-route-id="@user.Id">Update</a></td>
                 </tr>
             }
         </table>

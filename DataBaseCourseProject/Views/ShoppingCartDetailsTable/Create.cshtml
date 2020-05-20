@@ -1,12 +1,13 @@
 ﻿@model ShoppingCartDetails
 
 @{
-    ViewData["Title"] = "Create";
+    var action = Model.Id == null ? "Create" : "Update";
+    ViewData["Title"] = action;
 }
 
-<h1 class="text-center">Create Shopping Cart Details</h1>
+<h1 class="text-center">@action Shopping Cart Details</h1>
 
-<form asp-controller="ShoppingCartDetailsTable" asp-action="Create">
+<form asp-controller="ShoppingCartDetailsTable" asp-action="@action">
     <div class="form-group mt-2 form-element">
         <label asp-for="ShoppingCartId" class="mb-0">Shopping Cart Id</label><span class="text-danger">*</span>
         <input type="number" asp-for="ShoppingCartId" class="form-control" />
@@ -20,6 +21,6 @@
         <input type="number" asp-for="Quantity" class="form-control" />
     </div>
     <div class="form-group mt-4 text-center">
-        <input type="submit" value="Create" class="btn-create btn btn-dark text-light" />
+        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
     </div>
 </form>

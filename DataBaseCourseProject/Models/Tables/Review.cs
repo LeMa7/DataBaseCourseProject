@@ -4,7 +4,7 @@ namespace DataBaseCourseProject.Models.Tables
 {
     public class Review
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public int? ProductId { get; set; }
 

@@ -35,5 +35,18 @@ namespace DataBaseCourseProject.Controllers
             tableService.Delete(id);
             return View("Index", tableService.GetAll());
         }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            return View("Create", tableService.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult Update(T model)
+        {
+            tableService.Update(model);
+            return View("Index", tableService.GetAll());
+        }
     }
 }

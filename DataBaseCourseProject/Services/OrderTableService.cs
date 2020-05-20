@@ -61,6 +61,41 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(Order model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateOrder", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.UserId);
+            oracleComponent.AddParameter(command, "UserIdVar", OracleDbType.Int32, model.UserId);
+            oracleComponent.AddParameter(command, "OrderDateVar", OracleDbType.Date, model.OrderDate);
+            oracleComponent.AddParameter(command, "ShipDateVar", OracleDbType.Date, model.ShipDate);
+            oracleComponent.AddParameter(command, "AdressVar", OracleDbType.Varchar2, model.Adress);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public Order GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from orders where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var order = new Order();
+            while (dataReader.Read())
+            {
+                order.Id = dataReader.GetInt32(0);
+                order.UserId = dataReader.GetInt32(1);
+                order.OrderDate = dataReader.GetDateTime(2);
+                order.ShipDate = dataReader.GetDateTime(3);
+                order.Adress = dataReader.GetString(4);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return order;
+        }
+
         public Order GetEmpty()
         {
             return new Order();

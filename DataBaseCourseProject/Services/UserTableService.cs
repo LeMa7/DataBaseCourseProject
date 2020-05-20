@@ -63,6 +63,43 @@ namespace DataBaseCourseProject.Services
             connection.Close();
         }
 
+        public void Update(User model)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "UpdateUser", CommandType.StoredProcedure);
+            oracleComponent.AddParameter(command, "IdVar", OracleDbType.Int32, model.Id);
+            oracleComponent.AddParameter(command, "FirstNameVar", OracleDbType.Varchar2, model.FirstName);
+            oracleComponent.AddParameter(command, "MiddleNameVar", OracleDbType.Varchar2, model.MiddleName);
+            oracleComponent.AddParameter(command, "LastNameVar", OracleDbType.Varchar2, model.LastName);
+            oracleComponent.AddParameter(command, "EmailVar", OracleDbType.Varchar2, model.Email);
+            oracleComponent.AddParameter(command, "PhoneNumberVar", OracleDbType.Varchar2, model.PhoneNumber);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        public User GetById(int id)
+        {
+            var connection = oracleComponent.GetOpenConnection();
+            var command = oracleComponent.GetCommand(connection, "select * from users where id = :idVar", CommandType.Text);
+            oracleComponent.AddParameter(command, "idVar", OracleDbType.Int32, id);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var user = new User();
+            while (dataReader.Read())
+            {
+                user.Id = dataReader.GetInt32(0);
+                user.FirstName = dataReader.GetString(1);
+                user.MiddleName = dataReader.GetString(2);
+                user.LastName = dataReader.GetString(3);
+                user.Email = dataReader.GetString(4);
+                user.PhoneNumber = dataReader.GetString(5);
+            }
+
+            dataReader.Close();
+            connection.Dispose();
+            return user;
+        }
+
         public User GetEmpty()
         {
             return new User();
