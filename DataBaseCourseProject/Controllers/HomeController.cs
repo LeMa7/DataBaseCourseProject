@@ -24,6 +24,11 @@ namespace DataBaseCourseProject.Controllers
             return View();
         }
 
+        public IActionResult Views()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

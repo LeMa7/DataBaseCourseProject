@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataBaseCourseProject.Models
+namespace DataBaseCourseProject.Models.Tables
 {
     public class Review
     {

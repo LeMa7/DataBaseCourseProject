@@ -1,4 +1,4 @@
-﻿using DataBaseCourseProject.Models;
+﻿using DataBaseCourseProject.Models.Tables;
 using DataBaseCourseProject.ServiceInterfaces;
 
 namespace DataBaseCourseProject.Controllers

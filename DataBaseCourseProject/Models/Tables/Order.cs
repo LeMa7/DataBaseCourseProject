@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataBaseCourseProject.Models
+namespace DataBaseCourseProject.Models.Tables
 {
     public class Order
     {

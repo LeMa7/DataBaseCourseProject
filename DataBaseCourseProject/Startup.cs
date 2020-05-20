@@ -1,6 +1,7 @@
 using DataBaseCourseProject.ComponentInterfaces;
 using DataBaseCourseProject.Components;
-using DataBaseCourseProject.Models;
+using DataBaseCourseProject.Models.Tables;
+using DataBaseCourseProject.Models.Views;
 using DataBaseCourseProject.ServiceInterfaces;
 using DataBaseCourseProject.Services;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,7 @@ namespace DataBaseCourseProject
             services.AddTransient<ITableService<OrderDetails>, OrderDetailsTableService>();
             services.AddTransient<ITableService<ShoppingCart>, ShoppingCartTableService>();
             services.AddTransient<ITableService<ShoppingCartDetails>, ShoppingCartDetailsTableService>();
+            services.AddTransient<IViewService<ActiveOrderView>, ActiveOrderViewService>();
             services.AddTransient<IOracleComponent, OracleComponent>();
         }
 

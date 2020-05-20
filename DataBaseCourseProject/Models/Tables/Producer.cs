@@ -1,6 +1,6 @@
-﻿namespace DataBaseCourseProject.Models
+﻿namespace DataBaseCourseProject.Models.Tables
 {
-    public class Category
+    public class Producer
     {
         public int Id { get; set; }
 

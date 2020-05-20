@@ -1,4 +1,4 @@
-﻿namespace DataBaseCourseProject.Models
+﻿namespace DataBaseCourseProject.Models.Tables
 {
     public class Product
     {

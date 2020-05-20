@@ -1,11 +1,11 @@
-﻿namespace DataBaseCourseProject.Models
+﻿namespace DataBaseCourseProject.Models.Tables
 {
-    public class OrderDetails
+    public class ShoppingCartDetails
     {
         public int Id { get; set; }
 
-        public int? OrderId { get; set; }
-        
+        public int? ShoppingCartId { get; set; }
+
         public int? ProductId { get; set; }
 
         public int? Quantity { get; set; }

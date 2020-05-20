@@ -1,5 +1,5 @@
 ﻿using DataBaseCourseProject.ComponentInterfaces;
-using DataBaseCourseProject.Models;
+using DataBaseCourseProject.Models.Tables;
 using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
