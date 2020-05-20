@@ -1,0 +1,32 @@
+﻿@model List<ShoppingCart>
+@{
+    ViewData["Title"] = "ShoppingCarts";
+}
+
+<h1 class="text-center">Shopping Carts</h1>
+
+<div>
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:33%">Id</td>
+                <td style="width:33%">User Id</td>
+                <td style="width:33%"></td>
+            </tr>
+            @foreach (var shoppingCart in Model)
+            {
+                <tr class="border-bottom">
+                    <td style="width:33%">@shoppingCart.Id</td>
+                    <td style="width:33%">@shoppingCart.UserId</td>
+                    <td style="width:33%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Delete" asp-route-id="@shoppingCart.Id">Delete</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="mt-4">
+        <a class="nav-link text-white text-light btn btn-dark btn-create"
+           asp-area=""
+           asp-controller="ShoppingCartTable"
+           asp-action="Create">Create</a>
+    </div>
+</div>
