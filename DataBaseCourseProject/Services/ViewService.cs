@@ -7,16 +7,16 @@ using System.Data;
 
 namespace DataBaseCourseProject.Services
 {
-    public class ActiveOrderViewService : IViewService<ActiveOrderView>
+    public class ViewService : IViewService
     {
         private readonly IOracleComponent oracleComponent;
 
-        public ActiveOrderViewService(IOracleComponent oracleComponent)
+        public ViewService(IOracleComponent oracleComponent)
         {
             this.oracleComponent = oracleComponent;
         }
 
-        public List<ActiveOrderView> GetView()
+        public List<ActiveOrderView> GetActiveOrdersView()
         {
             var connection = oracleComponent.GetOpenConnection();
             var command = oracleComponent.GetCommand(connection, "select * from ActiveOrdersView", CommandType.Text);

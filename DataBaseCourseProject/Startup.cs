@@ -35,7 +35,7 @@ namespace DataBaseCourseProject
             services.AddTransient<ITableService<OrderDetails>, OrderDetailsTableService>();
             services.AddTransient<ITableService<ShoppingCart>, ShoppingCartTableService>();
             services.AddTransient<ITableService<ShoppingCartDetails>, ShoppingCartDetailsTableService>();
-            services.AddTransient<IViewService<ActiveOrderView>, ActiveOrderViewService>();
+            services.AddTransient<IViewService, ViewService>();
             services.AddTransient<IOracleComponent, OracleComponent>();
         }
 

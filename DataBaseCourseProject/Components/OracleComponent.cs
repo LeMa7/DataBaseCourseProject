@@ -6,7 +6,7 @@ namespace DataBaseCourseProject.Components
 {
     public class OracleComponent : IOracleComponent
     {
-        private const string connectionString = "User Id=SYS;Password=07082000Lok;DBA Privilege=SYSDBA;Data Source=localhost:1521/orcl";
+        private const string connectionString = "User Id=system;Password=qwerty;Data Source=localhost:1521/orcl";
 
         public OracleConnection GetOpenConnection()
         {

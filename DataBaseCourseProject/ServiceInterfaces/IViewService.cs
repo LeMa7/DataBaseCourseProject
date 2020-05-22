@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DataBaseCourseProject.Models.Views;
+using System.Collections.Generic;
 
 namespace DataBaseCourseProject.ServiceInterfaces
 {
-    public interface IViewService<T>
+    public interface IViewService
     {
-        List<T> GetView();
+        List<ActiveOrderView> GetActiveOrdersView();
     }
 }
