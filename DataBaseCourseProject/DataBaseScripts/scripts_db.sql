@@ -92,6 +92,37 @@ CREATE TABLE ShoppingCartDetails(
     CONSTRAINT FK_CartDetails_Products FOREIGN KEY(ProductId) REFERENCES Products(Id)
 )
 
+--SYNONYMS--
+
+CREATE PUBLIC SYNONYM Users
+FOR system.Users;
+
+CREATE PUBLIC SYNONYM Producers
+FOR system.Producers;
+
+CREATE PUBLIC SYNONYM Categories
+FOR system.Categories;
+
+CREATE PUBLIC SYNONYM Subcategories
+FOR system.Subcategories;
+
+CREATE PUBLIC SYNONYM Products
+FOR system.Products;
+
+CREATE PUBLIC SYNONYM Reviews
+FOR system.Reviews;
+
+CREATE PUBLIC SYNONYM Orders
+FOR system.Orders;
+
+CREATE PUBLIC SYNONYM OrderDetails
+FOR system.OrderDetails;
+
+CREATE PUBLIC SYNONYM ShoppingCarts
+FOR system.ShoppingCarts;
+
+CREATE PUBLIC SYNONYM ShoppingCartDetails
+FOR system.ShoppingCartDetails;
 --Procedures--
 
 CREATE PROCEDURE AddUser(FirstNameVar VARCHAR, MiddleNameVar VARCHAR, LastNameVar VARCHAR, EmailVar VARCHAR, PhoneNumberVar VARCHAR) AS
@@ -279,18 +310,29 @@ CREATE PROCEDURE UpdateShoppingCartDetails(IdVar NUMBER, ShoppingCartIdVar NUMBE
         SET ShoppingCartId = ShoppingCartIdVar, ProductId = ProductIdVar, Quantity = QuantityVar
         WHERE Id = IdVar;
     END;
-    
-CREATE PROCEDURE GetUserById(IdVar NUMBER) AS
-    BEGIN
-        SELECT * FROM Users WHERE Id = IdVar;
-    END;
 --Views--
 
 CREATE VIEW ActiveOrdersView AS
     SELECT UserId, u.FirstName, u.LastName, u.MiddleName, OrderDate, ShipDate, Adress FROM Orders o
     LEFT JOIN Users u ON o.UserId = u.Id
     WHERE ShipDate > sysdate;
-    
+
+CREATE VIEW ProductsFullInfo AS
+    SELECT 
+        products.Id AS Id,
+        products.Name AS Name,
+        producers.Name AS Producer,
+        Description AS Description,
+        categories.Name AS Category,
+        subcategories.Name AS Subcategory,
+        Price AS Price,
+        Quantity AS Quantity
+    FROM Products products
+    LEFT JOIN Subcategories subCategories ON products.SubcategoryId = subcategories.Id
+    LEFT JOIN Categories categories ON subcategories.CategoryId = categories.Id
+    LEFT JOIN Producers producers ON products.ProducerId = producers.Id;
+--Functions--    
+
 CREATE FUNCTION get_enc_val(p_in_val IN VARCHAR2, p_key IN VARCHAR2)
    RETURN VARCHAR2
 IS
@@ -327,11 +369,93 @@ BEGIN
 RETURN utl_i18n.raw_to_char (l_dec);
 END;
 
+--Triggers--
+
 CREATE TRIGGER encrypt_password
    BEFORE INSERT OR UPDATE OF Password ON Users
    FOR EACH ROW
    BEGIN
    :NEW.Password := get_enc_val(:NEW.Password, '1234567890123456');
    END;
-   
-   DROP TRIGGER encrypt_password;
+
+--Users--
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+CREATE USER shop_admin IDENTIFIED BY qwerty;
+
+GRANT ALL PRIVILEGES to shop_admin;  
+
+CREATE USER tableReader IDENTIFIED BY qwerty;
+
+GRANT CREATE SESSION TO tableReader;
+
+GRANT
+  SELECT
+ON
+  Users
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Producers
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Subcategories
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Categories
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Products
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Orders
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  OrderDetails
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  Reviews
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  ShoppingCarts
+TO
+  tableReader;
+  
+GRANT
+  SELECT
+ON
+  ShoppingCartDetails
+TO
+  tableReader;
