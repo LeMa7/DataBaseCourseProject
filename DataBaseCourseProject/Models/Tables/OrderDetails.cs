@@ -1,9 +1,7 @@
 ﻿namespace DataBaseCourseProject.Models.Tables
 {
-    public class OrderDetails
+    public class OrderDetails : BaseTableEntity
     {
-        public int? Id { get; set; }
-
         public int? OrderId { get; set; }
         
         public int? ProductId { get; set; }

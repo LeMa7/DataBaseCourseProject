@@ -1,0 +1,21 @@
+﻿@model BaseListModel<Producer>
+
+<div>
+    <table style="width:100%" class="text-center">
+        <tr>
+            <td style="width:25%">Id</td>
+            <td style="width:25%">Name</td>
+            <td style="width:25%"></td>
+            <td style="width:25%"></td>
+        </tr>
+        @foreach (var producer in Model.Entities)
+        {
+            <tr class="border-bottom">
+                <td style="width:25%">@producer.Id</td>
+                <td style="width:25%">@producer.Name</td>
+                <td style="width:25%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ProducerTable" asp-action="Delete" asp-route-id="@producer.Id">Delete</a></td>
+                <td style="width:25%"><a class="btn btn-warning mt-1 mb-1" asp-controller="ProducerTable" asp-action="Update" asp-route-id="@producer.Id">Update</a></td>
+            </tr>
+        }
+    </table>
+</div>

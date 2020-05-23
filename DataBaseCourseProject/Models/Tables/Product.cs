@@ -1,9 +1,7 @@
 ﻿namespace DataBaseCourseProject.Models.Tables
 {
-    public class Product
+    public class Product : BaseTableEntity
     {
-        public int? Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }

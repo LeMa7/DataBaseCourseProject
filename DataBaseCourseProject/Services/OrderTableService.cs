@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,27 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Order> GetAll()
+        public BaseListModel<Order> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from orders", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var orderList = new List<Order>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Order>
             {
-                orderList.Add(new Order
-                {
-                    Id = dataReader.GetInt32(0),
-                    UserId = dataReader.GetInt32(1),
-                    OrderDate = dataReader.GetDateTime(2),
-                    ShipDate = dataReader.GetDateTime(3),
-                    Adress = dataReader.GetString(4)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Orders", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Orders")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return orderList;
+            return baseListModel;
         }
 
         public void Create(Order model)
@@ -99,6 +90,26 @@ namespace DataBaseCourseProject.Services
         public Order GetEmpty()
         {
             return new Order();
+        }
+
+        private List<Order> GetList(OracleCommand command) 
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var orderList = new List<Order>();
+            while (dataReader.Read())
+            {
+                orderList.Add(new Order
+                {
+                    Id = dataReader.GetInt32(0),
+                    UserId = dataReader.GetInt32(1),
+                    OrderDate = dataReader.GetDateTime(2),
+                    ShipDate = dataReader.GetDateTime(3),
+                    Adress = dataReader.GetString(4),
+                    RowNum = dataReader.GetInt32(5)
+                });
+            }
+
+            return orderList.OrderBy(x => x.Id).ToList();
         }
     }
 }

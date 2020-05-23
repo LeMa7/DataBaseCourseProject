@@ -2,10 +2,8 @@
 
 namespace DataBaseCourseProject.Models.Tables
 {
-    public class Order
+    public class Order : BaseTableEntity
     {
-        public int? Id { get; set; }
-
         public int? UserId { get; set; }
 
         public DateTime? OrderDate { get; set; }

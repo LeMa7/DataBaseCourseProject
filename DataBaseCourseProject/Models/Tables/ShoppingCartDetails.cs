@@ -1,9 +1,7 @@
 ﻿namespace DataBaseCourseProject.Models.Tables
 {
-    public class ShoppingCartDetails
+    public class ShoppingCartDetails : BaseTableEntity
     {
-        public int? Id { get; set; }
-
         public int? ShoppingCartId { get; set; }
 
         public int? ProductId { get; set; }

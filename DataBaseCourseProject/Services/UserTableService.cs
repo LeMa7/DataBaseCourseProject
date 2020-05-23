@@ -2,8 +2,10 @@
 using DataBaseCourseProject.Models.Tables;
 using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
+using RandomNameGeneratorLibrary;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,28 +18,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<User> GetAll()
+        public BaseListModel<User> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from users", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var userList = new List<User>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<User>
             {
-                userList.Add(new User
-                {
-                    Id = dataReader.GetInt32(0),
-                    FirstName = dataReader.GetString(1),
-                    MiddleName = dataReader.GetString(2),
-                    LastName = dataReader.GetString(3),
-                    Email = dataReader.GetString(4),
-                    PhoneNumber = dataReader.GetString(5)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Users", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Users")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return userList;
+            return baseListModel;
         }
 
         public void Create(User model)
@@ -49,6 +40,7 @@ namespace DataBaseCourseProject.Services
             oracleComponent.AddParameter(command, "LastNameVar", OracleDbType.Varchar2, model.LastName);
             oracleComponent.AddParameter(command, "EmailVar", OracleDbType.Varchar2, model.Email);
             oracleComponent.AddParameter(command, "PhoneNumberVar", OracleDbType.Varchar2, model.PhoneNumber);
+            oracleComponent.AddParameter(command, "PasswordVar", OracleDbType.Varchar2, model.Password);
             command.ExecuteNonQuery();
             command.Dispose();
             connection.Close();
@@ -103,6 +95,28 @@ namespace DataBaseCourseProject.Services
         public User GetEmpty()
         {
             return new User();
+        }
+
+        private List<User> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var userList = new List<User>();
+            while (dataReader.Read())
+            {
+                userList.Add(new User
+                {
+                    Id = dataReader.GetInt32(0),
+                    FirstName = dataReader.GetString(1),
+                    MiddleName = dataReader.GetString(2),
+                    LastName = dataReader.GetString(3),
+                    Email = dataReader.GetString(4),
+                    PhoneNumber = dataReader.GetString(5),
+                    Password = dataReader.GetString(6),
+                    RowNum = dataReader.GetInt32(7)
+                });
+            }
+
+            return userList.OrderBy(x => x.Id).ToList();
         }
     }
 }

@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,24 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Category> GetAll()
+        public BaseListModel<Category> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from categories", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var categoryList = new List<Category>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Category>
             {
-                categoryList.Add(new Category
-                {
-                    Id = dataReader.GetInt32(0),
-                    Name = dataReader.GetString(1)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Categories", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Categories")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return categoryList;
+            return baseListModel;
         }
 
         public void Create(Category model)
@@ -87,6 +81,23 @@ namespace DataBaseCourseProject.Services
         public Category GetEmpty()
         {
             return new Category();
+        }
+
+        private List<Category> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var categoryList = new List<Category>();
+            while (dataReader.Read())
+            {
+                categoryList.Add(new Category
+                {
+                    Id = dataReader.GetInt32(0),
+                    Name = dataReader.GetString(1),
+                    RowNum = dataReader.GetInt32(2)
+                });
+            }
+
+            return categoryList.OrderBy(x => x.Id).ToList();
         }
     }
 }

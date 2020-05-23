@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,24 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Producer> GetAll()
+        public BaseListModel<Producer> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from producers", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var producerList = new List<Producer>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Producer>
             {
-                producerList.Add(new Producer
-                {
-                    Id = dataReader.GetInt32(0),
-                    Name = dataReader.GetString(1)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Producers", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Producers")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return producerList;
+            return baseListModel;
         }
 
         public void Create(Producer model)
@@ -87,6 +81,23 @@ namespace DataBaseCourseProject.Services
         public Producer GetEmpty()
         {
             return new Producer();
+        }
+
+        private List<Producer> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var producerList = new List<Producer>();
+            while (dataReader.Read())
+            {
+                producerList.Add(new Producer
+                {
+                    Id = dataReader.GetInt32(0),
+                    Name = dataReader.GetString(1),
+                    RowNum = dataReader.GetInt32(2)
+                });
+            }
+
+            return producerList.OrderBy(x => x.Id).ToList();
         }
     }
 }

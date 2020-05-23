@@ -10,5 +10,9 @@ namespace DataBaseCourseProject.ComponentInterfaces
         OracleCommand GetCommand(OracleConnection connection, string commandText, CommandType commandType);
 
         void AddParameter(OracleCommand command, string name, OracleDbType type, object value);
+
+        OracleCommand CommandForGetPart(OracleConnection connection, string table, int startRow);
+
+        int GetRowsCount(OracleConnection connection, string table);
     }
 }

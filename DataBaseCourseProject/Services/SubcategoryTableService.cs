@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,25 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Subcategory> GetAll()
+        public BaseListModel<Subcategory> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from subcategories", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var subcategoryList = new List<Subcategory>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Subcategory>
             {
-                subcategoryList.Add(new Subcategory
-                {
-                    Id = dataReader.GetInt32(0),
-                    Name = dataReader.GetString(1),
-                    CategoryId = dataReader.GetInt32(2)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Subcategories", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Subcategories")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return subcategoryList;
+            return baseListModel;
         }
 
         public void Create(Subcategory model)
@@ -91,6 +84,24 @@ namespace DataBaseCourseProject.Services
         public Subcategory GetEmpty()
         {
             return new Subcategory();
+        }
+
+        private List<Subcategory> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var subcategoryList = new List<Subcategory>();
+            while (dataReader.Read())
+            {
+                subcategoryList.Add(new Subcategory
+                {
+                    Id = dataReader.GetInt32(0),
+                    Name = dataReader.GetString(1),
+                    CategoryId = dataReader.GetInt32(2),
+                    RowNum = dataReader.GetInt32(3)
+                });
+            }
+
+            return subcategoryList.OrderBy(x => x.Id).ToList();
         }
     }
 }

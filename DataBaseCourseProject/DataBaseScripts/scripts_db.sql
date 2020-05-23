@@ -7,7 +7,7 @@ CREATE TABLE Users(
     LastName VARCHAR(50) NOT NULL,
     Email VARCHAR(50) UNIQUE NOT NULL,
     PhoneNumber VARCHAR(50) UNIQUE NOT NULL,
-    Password VARCHAR(200) NULL,
+    Password VARCHAR(200) NOT NULL,
     CONSTRAINT PK_Users PRIMARY KEY(Id)
 )
 
@@ -125,10 +125,10 @@ CREATE PUBLIC SYNONYM ShoppingCartDetails
 FOR system.ShoppingCartDetails;
 --Procedures--
 
-CREATE PROCEDURE AddUser(FirstNameVar VARCHAR, MiddleNameVar VARCHAR, LastNameVar VARCHAR, EmailVar VARCHAR, PhoneNumberVar VARCHAR) AS
+CREATE OR REPLACE PROCEDURE AddUser(FirstNameVar VARCHAR, MiddleNameVar VARCHAR, LastNameVar VARCHAR, EmailVar VARCHAR, PhoneNumberVar VARCHAR, PasswordVar VARCHAR) AS
     BEGIN
-        INSERT INTO Users(FirstName, MiddleName, LastName, Email, PhoneNumber)
-            VALUES(FirstNameVar, MiddleNameVar, LastNameVar, EmailVar, PhoneNumberVar);
+        INSERT INTO Users(FirstName, MiddleName, LastName, Email, PhoneNumber, Password)
+            VALUES(FirstNameVar, MiddleNameVar, LastNameVar, EmailVar, PhoneNumberVar, PasswordVar);
     END;
 
 CREATE PROCEDURE AddProducer(NameVar VARCHAR) AS

@@ -1,0 +1,25 @@
+﻿@model BaseListModel<OrderDetails>
+
+<div>
+    <table style="width:100%" class="text-center">
+        <tr>
+            <td style="width:16%">Id</td>
+            <td style="width:16%">Order Id</td>
+            <td style="width:16%">Product Id</td>
+            <td style="width:16%">Quantity</td>
+            <td style="width:16%"></td>
+            <td style="width:16%"></td>
+        </tr>
+        @foreach (var orderDetails in Model.Entities)
+        {
+            <tr class="border-bottom">
+                <td style="width:16%">@orderDetails.Id</td>
+                <td style="width:16%">@orderDetails.OrderId</td>
+                <td style="width:16%">@orderDetails.ProductId</td>
+                <td style="width:16%">@orderDetails.Quantity</td>
+                <td style="width:16%"><a class="btn btn-danger mt-1 mb-1" asp-controller="OrderDetailsTable" asp-action="Delete" asp-route-id="@orderDetails.Id">Delete</a></td>
+                <td style="width:16%"><a class="btn btn-warning mt-1 mb-1" asp-controller="OrderDetailsTable" asp-action="Update" asp-route-id="@orderDetails.Id">Update</a></td>
+            </tr>
+        }
+    </table>
+</div>

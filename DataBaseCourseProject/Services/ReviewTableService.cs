@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,27 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Review> GetAll()
+        public BaseListModel<Review> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from reviews", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var reviewList = new List<Review>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Review>
             {
-                reviewList.Add(new Review
-                {
-                    Id = dataReader.GetInt32(0),
-                    ProductId = dataReader.GetInt32(1),
-                    UserId = dataReader.GetInt32(2),
-                    Rating = dataReader.GetInt32(3),
-                    Comments = dataReader.GetString(4)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Reviews", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Reviews")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return reviewList;
+            return baseListModel;
         }
 
         public void Create(Review model)
@@ -99,6 +90,26 @@ namespace DataBaseCourseProject.Services
         public Review GetEmpty()
         {
             return new Review();
+        }
+
+        private List<Review> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var reviewList = new List<Review>();
+            while (dataReader.Read())
+            {
+                reviewList.Add(new Review
+                {
+                    Id = dataReader.GetInt32(0),
+                    ProductId = dataReader.GetInt32(1),
+                    UserId = dataReader.GetInt32(2),
+                    Rating = dataReader.GetInt32(3),
+                    Comments = dataReader.GetString(4),
+                    RowNum = dataReader.GetInt32(5)
+                });
+            }
+
+            return reviewList.OrderBy(x => x.Id).ToList();
         }
     }
 }

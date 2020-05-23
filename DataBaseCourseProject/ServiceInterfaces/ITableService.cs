@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DataBaseCourseProject.Models.Tables;
+using System.Collections.Generic;
 
 namespace DataBaseCourseProject.ServiceInterfaces
 {
     public interface ITableService<T>
     {
-        List<T> GetAll();
-
         void Create(T model);
 
         void Delete(int id);
@@ -15,5 +14,7 @@ namespace DataBaseCourseProject.ServiceInterfaces
         T GetEmpty();
 
         T GetById(int id);
+
+        BaseListModel<T> GetPart(int startRow = 1);
     }
 }

@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,26 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<ShoppingCartDetails> GetAll()
+        public BaseListModel<ShoppingCartDetails> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from shoppingCartDetails", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var shoppingCartDetailsList = new List<ShoppingCartDetails>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<ShoppingCartDetails>
             {
-                shoppingCartDetailsList.Add(new ShoppingCartDetails
-                {
-                    Id = dataReader.GetInt32(0),
-                    ShoppingCartId = dataReader.GetInt32(1),
-                    ProductId = dataReader.GetInt32(2),
-                    Quantity = dataReader.GetInt32(3)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "ShoppingCartDetails", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "ShoppingCartDetails")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return shoppingCartDetailsList;
+            return baseListModel;
         }
 
         public void Create(ShoppingCartDetails model)
@@ -95,6 +87,25 @@ namespace DataBaseCourseProject.Services
         public ShoppingCartDetails GetEmpty()
         {
             return new ShoppingCartDetails();
+        }
+
+        private List<ShoppingCartDetails> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var shoppingCartDetailsList = new List<ShoppingCartDetails>();
+            while (dataReader.Read())
+            {
+                shoppingCartDetailsList.Add(new ShoppingCartDetails
+                {
+                    Id = dataReader.GetInt32(0),
+                    ShoppingCartId = dataReader.GetInt32(1),
+                    ProductId = dataReader.GetInt32(2),
+                    Quantity = dataReader.GetInt32(3),
+                    RowNum = dataReader.GetInt32(4)
+                });
+            }
+
+            return shoppingCartDetailsList.OrderBy(x => x.Id).ToList();
         }
     }
 }

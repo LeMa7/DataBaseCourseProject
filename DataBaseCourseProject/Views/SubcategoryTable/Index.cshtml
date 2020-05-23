@@ -1,31 +1,14 @@
-﻿@model List<Subcategory>
+﻿@model BaseListModel<Subcategory>
 @{
+    var pageCount = Math.Ceiling(Convert.ToDouble(Model.EntitiesCount) / 150);
     ViewData["Title"] = "Subcategories";
 }
 
 <h1 class="text-center">Subcategories</h1>
 
 <div>
-    <div>
-        <table style="width:100%" class="text-center">
-            <tr>
-                <td style="width:20%">Id</td>
-                <td style="width:20%">Name</td>
-                <td style="width:20%">CategoryId</td>
-                <td style="width:20%"></td>
-                <td style="width:20%"></td>
-            </tr>
-            @foreach (var subcategory in Model)
-            {
-                <tr class="border-bottom">
-                    <td style="width:20%">@subcategory.Id</td>
-                    <td style="width:20%">@subcategory.Name</td>
-                    <td style="width:20%">@subcategory.CategoryId</td>
-                    <td style="width:20%"><a class="btn btn-danger mt-1 mb-1" asp-controller="SubcategoryTable" asp-action="Delete" asp-route-id="@subcategory.Id">Delete</a></td>
-                    <td style="width:20%"><a class="btn btn-warning mt-1 mb-1" asp-controller="SubcategoryTable" asp-action="Update" asp-route-id="@subcategory.Id">Update</a></td>
-                </tr>
-            }
-        </table>
+    <div id="items">
+        @await Html.PartialAsync("_Items", Model)
     </div>
     <div class="mt-4">
         <a class="nav-link text-white text-light btn btn-dark btn-create"
@@ -33,4 +16,18 @@
            asp-controller="SubcategoryTable"
            asp-action="Create">Create</a>
     </div>
+    @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+    {
+        <button class="btn btn-link">@pageNum</button>
+    }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-link").click(function () {
+                loadItems($(this).html(), 'SubcategoryTable');
+            });
+        });
+    </script>
+}

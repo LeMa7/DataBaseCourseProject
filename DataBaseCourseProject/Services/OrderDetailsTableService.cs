@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,26 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<OrderDetails> GetAll()
+        public BaseListModel<OrderDetails> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from orderDetails", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var orderDetailsList = new List<OrderDetails>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<OrderDetails>
             {
-                orderDetailsList.Add(new OrderDetails
-                {
-                    Id = dataReader.GetInt32(0),
-                    OrderId = dataReader.GetInt32(1),
-                    ProductId = dataReader.GetInt32(2),
-                    Quantity = dataReader.GetInt32(3)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "OrderDetails", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "OrderDetails")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return orderDetailsList;
+            return baseListModel;
         }
 
         public void Create(OrderDetails model)
@@ -95,6 +87,25 @@ namespace DataBaseCourseProject.Services
         public OrderDetails GetEmpty()
         {
             return new OrderDetails();
+        }
+
+        private List<OrderDetails> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var orderDetailsList = new List<OrderDetails>();
+            while (dataReader.Read())
+            {
+                orderDetailsList.Add(new OrderDetails
+                {
+                    Id = dataReader.GetInt32(0),
+                    OrderId = dataReader.GetInt32(1),
+                    ProductId = dataReader.GetInt32(2),
+                    Quantity = dataReader.GetInt32(3),
+                    RowNum = dataReader.GetInt32(4)
+                });
+            }
+
+            return orderDetailsList.OrderBy(x => x.Id).ToList();
         }
     }
 }

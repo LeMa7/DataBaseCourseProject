@@ -2,10 +2,8 @@
 
 namespace DataBaseCourseProject.Models.Tables
 {
-    public class Review
+    public class Review : BaseTableEntity
     {
-        public int? Id { get; set; }
-
         public int? ProductId { get; set; }
 
         public int? UserId { get; set; }

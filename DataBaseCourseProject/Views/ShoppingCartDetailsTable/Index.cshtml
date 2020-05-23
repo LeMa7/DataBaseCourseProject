@@ -1,41 +1,14 @@
-﻿@model List<ShoppingCartDetails>
+﻿@model BaseListModel<ShoppingCartDetails>
 @{
+    var pageCount = Math.Ceiling(Convert.ToDouble(Model.EntitiesCount) / 150);
     ViewData["Title"] = "Shopping Cart Details";
 }
 
 <h1 class="text-center">Shopping Cart Details</h1>
 
 <div>
-    <div>
-        <table style="width:100%" class="text-center">
-            <tr>
-                <td style="width:16%">Id</td>
-                <td style="width:16%">Shopping Cart Id</td>
-                <td style="width:16%">Product Id</td>
-                <td style="width:16%">Quantity</td>
-                <td style="width:16%"></td>
-                <td style="width:16%"></td>
-            </tr>
-            @foreach (var shoppingCartDetails in Model)
-            {
-                <tr class="border-bottom">
-                    <td style="width:16%">@shoppingCartDetails.Id</td>
-                    <td style="width:16%">@shoppingCartDetails.ShoppingCartId</td>
-                    <td style="width:16%">@shoppingCartDetails.ProductId</td>
-                    <td style="width:16%">@shoppingCartDetails.Quantity</td>
-                    <td style="width:16%">
-                        <a class="btn btn-danger mt-1 mb-1" asp-controller="ShoppingCartDetailsTable" asp-action="Delete" asp-route-id="@shoppingCartDetails.Id">
-                            Delete
-                        </a>
-                    </td>
-                    <td style="width:16%">
-                        <a class="btn btn-warning mt-1 mb-1" asp-controller="ShoppingCartDetailsTable" asp-action="Update" asp-route-id="@shoppingCartDetails.Id">
-                            Update
-                        </a>
-                    </td>
-                </tr>
-            }
-        </table>
+    <div id="items">
+        @await Html.PartialAsync("_Items", Model)
     </div>
     <div class="mt-4">
         <a class="nav-link text-white text-light btn btn-dark btn-create"
@@ -43,4 +16,18 @@
            asp-controller="ShoppingCartDetailsTable"
            asp-action="Create">Create</a>
     </div>
+    @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+    {
+        <button class="btn btn-link">@pageNum</button>
+    }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-link").click(function () {
+                loadItems($(this).html(), 'ShoppingCartDetailsTable');
+            });
+        });
+    </script>
+}

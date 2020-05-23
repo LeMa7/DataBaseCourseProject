@@ -1,40 +1,14 @@
-﻿@model List<Product>
+﻿@model BaseListModel<Product>
 @{
+    var pageCount = Math.Ceiling(Convert.ToDouble(Model.EntitiesCount) / 150);
     ViewData["Title"] = "Products";
 }
 
 <h1 class="text-center">Products</h1>
 
 <div>
-    <div>
-        <table style="width:100%" class="text-center">
-            <tr>
-                <td style="width:11%">Id</td>
-                <td style="width:11%">Name</td>
-                <td style="width:11%">Description</td>
-                <td style="width:11%">SubcategoryId</td>
-                <td style="width:11%">ProducerId</td>
-                <td style="width:11%">Price</td>
-                <td style="width:11%">Quantity</td>
-                <td style="width:11%"></td>
-                <td style="width:11%"></td>
-            </tr>
-            @foreach (var product in Model)
-            {
-                <tr class="border-bottom">
-                    <td style="width:11%">@product.Id</td>
-                    <td style="width:11%">@product.Name</td>
-                    <td style="width:11%">@product.Description</td>
-                    <td style="width:11%">@product.SubcategoryId</td>
-                    <td style="width:11%">@product.ProducerId</td>
-                    <td style="width:11%">@product.Price</td>
-                    <td style="width:11%">@product.Quantity</td>
-                    <td style="width:11%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ProductTable" asp-action="Delete" asp-route-id="@product.Id">Delete</a></td>
-                    <td style="width:11%"><a class="btn btn-warning mt-1 mb-1" asp-controller="ProductTable" asp-action="Update" asp-route-id="@product.Id">Update</a></td>
-
-                </tr>
-            }
-        </table>
+    <div id="items">
+        @await Html.PartialAsync("_Items", Model)
     </div>
     <div class="mt-4">
         <a class="nav-link text-white text-light btn btn-dark btn-create"
@@ -42,4 +16,18 @@
            asp-controller="ProductTable"
            asp-action="Create">Create</a>
     </div>
+    @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+    {
+        <button class="btn btn-link">@pageNum</button>
+    }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-link").click(function () {
+                loadItems($(this).html(), 'ProductTable');
+            });
+        });
+    </script>
+}

@@ -1,29 +1,14 @@
-﻿@model List<ShoppingCart>
+﻿@model BaseListModel<ShoppingCart>
 @{
+    var pageCount = Math.Ceiling(Convert.ToDouble(Model.EntitiesCount) / 150);
     ViewData["Title"] = "ShoppingCarts";
 }
 
 <h1 class="text-center">Shopping Carts</h1>
 
 <div>
-    <div>
-        <table style="width:100%" class="text-center">
-            <tr>
-                <td style="width:25%">Id</td>
-                <td style="width:25%">User Id</td>
-                <td style="width:25%"></td>
-                <td style="width:25%"></td>
-            </tr>
-            @foreach (var shoppingCart in Model)
-            {
-                <tr class="border-bottom">
-                    <td style="width:25%">@shoppingCart.Id</td>
-                    <td style="width:25%">@shoppingCart.UserId</td>
-                    <td style="width:25%"><a class="btn btn-danger mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Delete" asp-route-id="@shoppingCart.Id">Delete</a></td>
-                    <td style="width:25%"><a class="btn btn-warning mt-1 mb-1" asp-controller="ShoppingCartTable" asp-action="Update" asp-route-id="@shoppingCart.Id">Update</a></td>
-                </tr>
-            }
-        </table>
+    <div id="items">
+        @await Html.PartialAsync("_Items", Model)
     </div>
     <div class="mt-4">
         <a class="nav-link text-white text-light btn btn-dark btn-create"
@@ -31,4 +16,18 @@
            asp-controller="ShoppingCartTable"
            asp-action="Create">Create</a>
     </div>
+    @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+    {
+        <button class="btn btn-link">@pageNum</button>
+    }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-link").click(function () {
+                loadItems($(this).html(), 'ShoppingCartTable');
+            });
+        });
+    </script>
+}

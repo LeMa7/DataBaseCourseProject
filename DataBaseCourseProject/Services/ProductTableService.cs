@@ -4,6 +4,7 @@ using DataBaseCourseProject.ServiceInterfaces;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataBaseCourseProject.Services
 {
@@ -16,29 +17,17 @@ namespace DataBaseCourseProject.Services
             this.oracleComponent = oracleComponent;
         }
 
-        public List<Product> GetAll()
+        public BaseListModel<Product> GetPart(int startRow = 1)
         {
             var connection = oracleComponent.GetOpenConnection();
-            var command = oracleComponent.GetCommand(connection, "select * from products", CommandType.Text);
-            OracleDataReader dataReader = command.ExecuteReader();
-            var productList = new List<Product>();
-            while (dataReader.Read())
+            var baseListModel = new BaseListModel<Product>
             {
-                productList.Add(new Product
-                {
-                    Id = dataReader.GetInt32(0),
-                    Name = dataReader.GetString(1),
-                    Description = dataReader.GetString(2),
-                    SubcategoryId = dataReader.GetInt32(3),
-                    ProducerId = dataReader.GetInt32(4),
-                    Price = dataReader.GetInt32(5),
-                    Quantity = dataReader.GetInt32(6)
-                });
-            }
+                Entities = GetList(oracleComponent.CommandForGetPart(connection, "Products", startRow)),
+                EntitiesCount = oracleComponent.GetRowsCount(connection, "Products")
+            };
 
-            dataReader.Close();
             connection.Dispose();
-            return productList;
+            return baseListModel;
         }
 
         public void Create(Product model)
@@ -107,6 +96,28 @@ namespace DataBaseCourseProject.Services
         public Product GetEmpty()
         {
             return new Product();
+        }
+
+        private List<Product> GetList(OracleCommand command)
+        {
+            OracleDataReader dataReader = command.ExecuteReader();
+            var productList = new List<Product>();
+            while (dataReader.Read())
+            {
+                productList.Add(new Product
+                {
+                    Id = dataReader.GetInt32(0),
+                    Name = dataReader.GetString(1),
+                    Description = dataReader.GetString(2),
+                    SubcategoryId = dataReader.GetInt32(3),
+                    ProducerId = dataReader.GetInt32(4),
+                    Price = dataReader.GetInt32(5),
+                    Quantity = dataReader.GetInt32(6),
+                    RowNum = dataReader.GetInt32(7)
+                });
+            }
+
+            return productList.OrderBy(x => x.Id).ToList();
         }
     }
 }

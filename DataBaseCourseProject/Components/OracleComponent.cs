@@ -32,5 +32,30 @@ namespace DataBaseCourseProject.Components
                 Value = value
             });
         }
+
+        public OracleCommand CommandForGetPart(OracleConnection connection, string table, int startRow)
+        {
+            string select = string.Format(
+                "SELECT * FROM(SELECT t.*, ROWNUM AS rowNumber FROM(SELECT * FROM {0} ORDER BY Id) t) WHERE rowNumber BETWEEN: startRow AND: endRow",
+                table);
+            var command = GetCommand(
+                connection, select, CommandType.Text);
+            AddParameter(command, "startRow", OracleDbType.Varchar2, (startRow - 1) * 150 + 1);
+            AddParameter(command, "endRow", OracleDbType.Varchar2, startRow * 150);
+            return command;
+        }
+
+        public int GetRowsCount(OracleConnection connection, string table)
+        {
+            var command = GetCommand(connection, string.Format("SELECT COUNT(*) FROM {0}", table), CommandType.Text);
+            OracleDataReader dataReader = command.ExecuteReader();
+            var count = 0;
+            while (dataReader.Read())
+            {
+                count = dataReader.GetInt32(0);
+            }
+
+            return count;
+        }
     }
 }
