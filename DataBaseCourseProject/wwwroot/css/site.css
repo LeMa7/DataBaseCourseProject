@@ -87,3 +87,37 @@ td.comments {
     overflow-wrap: break-word;
     max-width: 50px;
 }
+
+body, html {
+    height: 100% !important;
+    margin: 0 !important;
+    font: 400 15px/1.8 "Lato", sans-serif !important;
+    color: #777 !important;
+}
+
+.bgimg-1 {
+    background-image: url("../img/database.jpg") !important;
+    height: 100% !important;
+    position: relative !important;
+    opacity: 0.9 !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.caption {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    width: 100% !important;
+    text-align: center !important;
+    color: #000 !important;
+}
+
+.caption span.border-home {
+    background-color: #111 !important;
+    color: #fff !important;
+    padding: 18px !important;
+    font-size: 25px !important;
+    letter-spacing: 10px !important;
+}

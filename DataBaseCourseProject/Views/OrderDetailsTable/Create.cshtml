@@ -5,22 +5,23 @@
     ViewData["Title"] = "Order Details";
 }
 
-<h1 class="text-center">@action Order Details</h1>
-
-<form asp-controller="OrderDetailsTable" asp-action="@action">
-    <div class="form-group mt-2 form-element">
-        <label asp-for="OrderId" class="mb-0">Order Id</label><span class="text-danger">*</span>
-        <input type="text" asp-for="OrderId" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="ProductId" class="mb-0">Product Id</label><span class="text-danger">*</span>
-        <input type="text" asp-for="ProductId" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="Quantity" class="mb-0">Quantity</label><span class="text-danger">*</span>
-        <input type="text" asp-for="Quantity" class="form-control" />
-    </div>
-    <div class="form-group mt-4 text-center">
-        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
-    </div>
-</form>
+<div class="container">
+    <h1 class="text-center">@action Order Details</h1>
+    <form asp-controller="OrderDetailsTable" asp-action="@action">
+        <div class="form-group mt-2 form-element">
+            <label asp-for="OrderId" class="mb-0">Order Id</label><span class="text-danger">*</span>
+            <input type="text" asp-for="OrderId" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="ProductId" class="mb-0">Product Id</label><span class="text-danger">*</span>
+            <input type="text" asp-for="ProductId" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="Quantity" class="mb-0">Quantity</label><span class="text-danger">*</span>
+            <input type="text" asp-for="Quantity" class="form-control" />
+        </div>
+        <div class="form-group mt-4 text-center">
+            <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
+        </div>
+    </form>
+</div>

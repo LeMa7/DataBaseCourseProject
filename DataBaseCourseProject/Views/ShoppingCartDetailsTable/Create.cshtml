@@ -5,22 +5,23 @@
     ViewData["Title"] = action;
 }
 
-<h1 class="text-center">@action Shopping Cart Details</h1>
-
-<form asp-controller="ShoppingCartDetailsTable" asp-action="@action">
-    <div class="form-group mt-2 form-element">
-        <label asp-for="ShoppingCartId" class="mb-0">Shopping Cart Id</label><span class="text-danger">*</span>
-        <input type="number" asp-for="ShoppingCartId" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="ProductId" class="mb-0">Product Id</label><span class="text-danger">*</span>
-        <input type="number" asp-for="ProductId" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="Quantity" class="mb-0">Quantity</label><span class="text-danger">*</span>
-        <input type="number" asp-for="Quantity" class="form-control" />
-    </div>
-    <div class="form-group mt-4 text-center">
-        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
-    </div>
-</form>
+<div class="container">
+    <h1 class="text-center">@action Shopping Cart Details</h1>
+    <form asp-controller="ShoppingCartDetailsTable" asp-action="@action">
+        <div class="form-group mt-2 form-element">
+            <label asp-for="ShoppingCartId" class="mb-0">Shopping Cart Id</label><span class="text-danger">*</span>
+            <input type="number" asp-for="ShoppingCartId" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="ProductId" class="mb-0">Product Id</label><span class="text-danger">*</span>
+            <input type="number" asp-for="ProductId" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="Quantity" class="mb-0">Quantity</label><span class="text-danger">*</span>
+            <input type="number" asp-for="Quantity" class="form-control" />
+        </div>
+        <div class="form-group mt-4 text-center">
+            <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
+        </div>
+    </form>
+</div>

@@ -5,26 +5,28 @@
     ViewData["Title"] = action;
 }
 
-<h1 class="text-center">@action order</h1>
+<div class="container">
+    <h1 class="text-center">@action order</h1>
 
-<form asp-controller="OrderTable" asp-action="@action">
-    <div class="form-group mt-2 form-element">
-        <label asp-for="UserId" class="mb-0">User Id</label><span class="text-danger">*</span>
-        <input type="text" asp-for="UserId" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="OrderDate" class="mb-0">Order Date</label><span class="text-danger">*</span>
-        <input type="text" asp-for="OrderDate" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="ShipDate" class="mb-0">Ship Date</label><span class="text-danger">*</span>
-        <input type="text" asp-for="ShipDate" class="form-control" />
-    </div>
-    <div class="form-group mt-2 form-element">
-        <label asp-for="Adress" class="mb-0">Adress</label><span class="text-danger">*</span>
-        <input type="text" asp-for="Adress" class="form-control" />
-    </div>
-    <div class="form-group mt-4 text-center">
-        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
-    </div>
-</form>
+    <form asp-controller="OrderTable" asp-action="@action">
+        <div class="form-group mt-2 form-element">
+            <label asp-for="UserId" class="mb-0">User Id</label><span class="text-danger">*</span>
+            <input type="text" asp-for="UserId" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="OrderDate" class="mb-0">Order Date</label><span class="text-danger">*</span>
+            <input type="text" asp-for="OrderDate" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="ShipDate" class="mb-0">Ship Date</label><span class="text-danger">*</span>
+            <input type="text" asp-for="ShipDate" class="form-control" />
+        </div>
+        <div class="form-group mt-2 form-element">
+            <label asp-for="Adress" class="mb-0">Adress</label><span class="text-danger">*</span>
+            <input type="text" asp-for="Adress" class="form-control" />
+        </div>
+        <div class="form-group mt-4 text-center">
+            <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
+        </div>
+    </form>
+</div>

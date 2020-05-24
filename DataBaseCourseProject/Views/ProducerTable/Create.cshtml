@@ -5,14 +5,15 @@
     ViewData["Title"] = action;
 }
 
-<h1 class="text-center">@action producer</h1>
-
-<form asp-controller="ProducerTable" asp-action="@action">
-    <div class="form-group mt-2 form-element">
-        <label asp-for="Name" class="mb-0">Name</label><span class="text-danger">*</span>
-        <input type="text" asp-for="Name" class="form-control" />
-    </div>
-    <div class="form-group mt-4 text-center">
-        <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
-    </div>
-</form>
+<div class="container">
+    <h1 class="text-center">@action producer</h1>
+    <form asp-controller="ProducerTable" asp-action="@action">
+        <div class="form-group mt-2 form-element">
+            <label asp-for="Name" class="mb-0">Name</label><span class="text-danger">*</span>
+            <input type="text" asp-for="Name" class="form-control" />
+        </div>
+        <div class="form-group mt-4 text-center">
+            <input type="submit" value="@action" class="btn-create btn btn-dark text-light" />
+        </div>
+    </form>
+</div>

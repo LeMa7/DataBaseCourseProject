@@ -4,30 +4,31 @@
     ViewData["Title"] = "Orders";
 }
 
-<h1 class="text-center">Orders</h1>
+<div class="container">
+    <h1 class="text-center">Orders</h1>
+    <div>
+        <div id="items">
+            @await Html.PartialAsync("_Items", Model)
+        </div>
+        <div class="mt-4">
+            <a class="nav-link text-white text-light btn btn-dark btn-create"
+               asp-area=""
+               asp-controller="OrderTable"
+               asp-action="Create">Create</a>
+        </div>
+        @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+        {
+            <button class="btn btn-link">@pageNum</button>
+        }
+    </div>
 
-<div>
-    <div id="items">
-        @await Html.PartialAsync("_Items", Model)
-    </div>
-    <div class="mt-4">
-        <a class="nav-link text-white text-light btn btn-dark btn-create"
-           asp-area=""
-           asp-controller="OrderTable"
-           asp-action="Create">Create</a>
-    </div>
-    @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
-    {
-        <button class="btn btn-link">@pageNum</button>
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $(".btn-link").click(function () {
+                    loadItems($(this).html(), 'OrderTable');
+                });
+            });
+        </script>
     }
 </div>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $(".btn-link").click(function () {
-                loadItems($(this).html(), 'OrderTable');
-            });
-        });
-    </script>
-}
