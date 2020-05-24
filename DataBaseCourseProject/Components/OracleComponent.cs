@@ -33,6 +33,16 @@ namespace DataBaseCourseProject.Components
             });
         }
 
+        public void AddOutParameter(OracleCommand command, string name, OracleDbType type, object value)
+        {
+            command.Parameters.Add(new OracleParameter(name, type)
+            {
+                Value = value,
+                Size = 200,
+                Direction = ParameterDirection.Output
+            });
+        }
+
         public OracleCommand CommandForGetPart(OracleConnection connection, string table, int startRow)
         {
             string select = string.Format(

@@ -310,6 +310,65 @@ CREATE PROCEDURE UpdateShoppingCartDetails(IdVar NUMBER, ShoppingCartIdVar NUMBE
         SET ShoppingCartId = ShoppingCartIdVar, ProductId = ProductIdVar, Quantity = QuantityVar
         WHERE Id = IdVar;
     END;
+    
+CREATE OR REPLACE PROCEDURE Comparison(FirstId IN NUMBER, SecondId IN NUMBER, Differences OUT VARCHAR) AS
+        NameDiffVar VARCHAR(200);
+        DescriptionDiffVar VARCHAR(200);
+        SubcategoryDiffVar VARCHAR(200);
+        ProducerDiffVar VARCHAR(200);
+        PriceDiffVar VARCHAR(200);
+        QuantityDiffVar VARCHAR(200);
+    BEGIN
+        SELECT 
+            CASE
+                WHEN Name = SecondName THEN ''
+                WHEN Name <> SecondName THEN 'Name'
+            END AS NameDiff,
+            CASE
+                WHEN Description = SecondDescription THEN ''
+                WHEN Description <> SecondDescription THEN ',Description'
+            END AS DescriptionDiff,
+            CASE
+                WHEN Subcategory = SecondSubcategory THEN ''
+                WHEN Subcategory <> SecondSubcategory THEN ',Subcategory'
+            END AS SubcategoryDiff,
+            CASE
+                WHEN Producer = SecondProducer THEN ''
+                WHEN Producer <> SecondProducer THEN ',Producer'
+            END AS SubcategoryDiff,
+            CASE
+                WHEN Price = SecondPrice THEN ''
+                WHEN Price <> SecondPrice THEN ',Price'
+            END AS PriceDiff,
+            CASE
+                WHEN Quantity = SecondQuantity THEN ''
+                WHEN Quantity <> SecondQuantity THEN ',Quantity'
+            END AS QuantityDiff
+        INTO
+            NameDiffVar, DescriptionDiffVar, SubcategoryDiffVar, ProducerDiffVar, PriceDiffVar, QuantityDiffVar
+        FROM
+            (SELECT
+                products.Id,
+                products.Name AS Name,
+                products.Description AS Description,
+                products.SubcategoryId AS Subcategory,
+                products.ProducerId AS Producer,
+                products.Price AS Price,
+                products.Quantity AS Quantity,
+                LEAD(products.Name) OVER(ORDER BY products.Id) AS SecondName,
+                LEAD(products.Description) OVER(ORDER BY products.Id) AS SecondDescription,
+                LEAD(products.SubcategoryId) OVER(ORDER BY products.Id) AS SecondSubcategory,
+                LEAD(products.ProducerId) OVER(ORDER BY products.Id) AS SecondProducer,
+                LEAD(products.Price) OVER(ORDER BY products.Id) AS SecondPrice,
+                LEAD(products.Quantity) OVER(ORDER BY products.Id) As SecondQuantity
+            FROM Products products
+            WHERE products.Id IN (FirstId, SecondId)
+            ORDER BY products.Id
+            ) t
+            WHERE ROWNUM < 2;
+        Differences := CONCAT(CONCAT(CONCAT(NameDiffVar, DescriptionDiffVar), CONCAT(SubcategoryDiffVar, PriceDiffVar)), CONCAT(QuantityDiffVar, ProducerDiffVar)); 
+    END Comparison;
+    
 --Views--
 
 CREATE VIEW ActiveOrdersView AS
@@ -331,6 +390,7 @@ CREATE VIEW ProductsFullInfo AS
     LEFT JOIN Subcategories subCategories ON products.SubcategoryId = subcategories.Id
     LEFT JOIN Categories categories ON subcategories.CategoryId = categories.Id
     LEFT JOIN Producers producers ON products.ProducerId = producers.Id;
+    
 --Functions--    
 
 CREATE FUNCTION get_enc_val(p_in_val IN VARCHAR2, p_key IN VARCHAR2)
