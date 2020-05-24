@@ -89,35 +89,35 @@ td.comments {
 }
 
 body, html {
-    height: 100% !important;
-    margin: 0 !important;
-    font: 400 15px/1.8 "Lato", sans-serif !important;
-    color: #777 !important;
+    height: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Lato", sans-serif;
+    color: #777;
 }
 
 .bgimg-1 {
-    background-image: url("../img/database.jpg") !important;
-    height: 100% !important;
-    position: relative !important;
-    opacity: 0.9 !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+    background-image: url("../img/database.jpg");
+    height: 100%;
+    position: relative;
+    opacity: 0.9;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .caption {
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    width: 100% !important;
-    text-align: center !important;
-    color: #000 !important;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
 }
 
 .caption span.border-home {
-    background-color: #111 !important;
-    color: #fff !important;
-    padding: 18px !important;
-    font-size: 25px !important;
-    letter-spacing: 10px !important;
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
 }
