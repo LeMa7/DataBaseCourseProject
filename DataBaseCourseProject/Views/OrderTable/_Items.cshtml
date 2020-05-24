@@ -1,27 +1,30 @@
 ﻿@model BaseListModel<Order>
 
-<div>
-    <table style="width:100%" class="text-center">
-        <tr>
-            <td style="width:14%">Id</td>
-            <td style="width:14%">User Id</td>
-            <td style="width:14%">Order Date</td>
-            <td style="width:14%">Ship Date</td>
-            <td style="width:14%">Adress</td>
-            <td style="width:14%"></td>
-            <td style="width:14%"></td>
-        </tr>
-        @foreach (var order in Model.Entities)
-        {
-            <tr class="border-bottom">
-                <td style="width:14%">@order.Id</td>
-                <td style="width:14%">@order.UserId</td>
-                <td style="width:14%">@order.OrderDate.Value.ToShortDateString()</td>
-                <td style="width:14%">@order.ShipDate.Value.ToShortDateString()</td>
-                <td style="width:14%">@order.Adress</td>
-                <td style="width:14%"><a class="btn btn-danger mt-1 mb-1" asp-controller="OrderTable" asp-action="Delete" asp-route-id="@order.Id">Delete</a></td>
-                <td style="width:14%"><a class="btn btn-warning mt-1 mb-1" asp-controller="OrderTable" asp-action="Update" asp-route-id="@order.Id">Update</a></td>
+@if (Model.Entities?.Count != 0)
+{
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:14%">Id</td>
+                <td style="width:14%">User Id</td>
+                <td style="width:14%">Order Date</td>
+                <td style="width:14%">Ship Date</td>
+                <td style="width:14%">Adress</td>
+                <td style="width:14%"></td>
+                <td style="width:14%"></td>
             </tr>
-        }
-    </table>
-</div>
+            @foreach (var order in Model.Entities)
+            {
+                <tr class="border-bottom">
+                    <td style="width:14%">@order.Id</td>
+                    <td style="width:14%">@order.UserId</td>
+                    <td style="width:14%">@order.OrderDate.Value.ToShortDateString()</td>
+                    <td style="width:14%">@order.ShipDate.Value.ToShortDateString()</td>
+                    <td style="width:14%">@order.Adress</td>
+                    <td style="width:14%"><a class="btn btn-danger mt-1 mb-1" asp-controller="OrderTable" asp-action="Delete" asp-route-id="@order.Id">Delete</a></td>
+                    <td style="width:14%"><a class="btn btn-warning mt-1 mb-1" asp-controller="OrderTable" asp-action="Update" asp-route-id="@order.Id">Update</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+}

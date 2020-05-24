@@ -16,19 +16,22 @@
                asp-controller="OrderTable"
                asp-action="Create">Create</a>
         </div>
-        @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+        @if (pageCount > 1)
         {
-            <button class="btn btn-link">@pageNum</button>
+            @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+            {
+                <button class="btn btn-link">@pageNum</button>
+            }
         }
     </div>
-
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
-                $(".btn-link").click(function () {
-                    loadItems($(this).html(), 'OrderTable');
-                });
-            });
-        </script>
-    }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn-link").click(function () {
+                loadItems($(this).html(), 'OrderTable');
+            });
+        });
+    </script>
+}

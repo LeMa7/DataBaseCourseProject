@@ -16,9 +16,12 @@
                asp-controller="ReviewTable"
                asp-action="Create">Create</a>
         </div>
-        @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+        @if (pageCount > 1)
         {
-            <button class="btn btn-link">@pageNum</button>
+            @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+            {
+                <button class="btn btn-link">@pageNum</button>
+            }
         }
     </div>
 </div>

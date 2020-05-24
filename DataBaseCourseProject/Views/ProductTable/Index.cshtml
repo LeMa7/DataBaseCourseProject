@@ -16,9 +16,12 @@
                asp-controller="ProductTable"
                asp-action="Create">Create</a>
         </div>
-        @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
-        {
-            <button class="btn btn-link">@pageNum</button>
+        @if (pageCount > 1)
+        { 
+            @for (int pageNum = 1; pageNum <= pageCount; pageNum++)
+            {
+                <button class="btn btn-link">@pageNum</button>
+            }
         }
     </div>
 </div>

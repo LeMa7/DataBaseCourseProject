@@ -1,5 +1,6 @@
 ﻿using DataBaseCourseProject.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace DataBaseCourseProject.Controllers
 {
@@ -19,7 +20,12 @@ namespace DataBaseCourseProject.Controllers
 
         public IActionResult GetItems(int startRow)
         {
-            return PartialView("_Items", tableService.GetPart(startRow));
+            var model = tableService.GetPart(startRow);
+            if (model.Entities == null)
+            {
+                model.Entities = new List<T>();
+            }
+            return PartialView("_Items", model);
         }
 
         [HttpGet]

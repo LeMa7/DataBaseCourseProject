@@ -1,31 +1,34 @@
 ﻿@model BaseListModel<User>
 
-<div>
-    <table style="width:100%" class="text-center">
-        <tr>
-            <td style="width:11%">Id</td>
-            <td style="width:11%">First Name</td>
-            <td style="width:11%">Last Name</td>
-            <td style="width:11%">Middle Name</td>
-            <td style="width:11%">Email</td>
-            <td style="width:11%">Phone Number</td>
-            <td style="width:11%">Password</td>
-            <td style="width:11%"></td>
-            <td style="width:11%"></td>
-        </tr>
-        @foreach (var user in Model.Entities)
-        {
-            <tr class="border-bottom">
-                <td style="width:11%">@user.Id</td>
-                <td style="width:11%">@user.FirstName</td>
-                <td style="width:11%">@user.LastName</td>
-                <td style="width:11%">@user.MiddleName</td>
-                <td style="width:11%">@user.Email</td>
-                <td style="width:11%">@user.PhoneNumber</td>
-                <td style="width:11%">@user.Password</td>
-                <td style="width:11%"><a class="btn btn-danger mt-1 mb-1" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
-                <td style="width:11%"><a class="btn btn-warning mt-1 mb-1" asp-controller="UserTable" asp-action="Update" asp-route-id="@user.Id">Update</a></td>
+@if (Model.Entities?.Count != 0)
+{
+    <div>
+        <table style="width:100%" class="text-center">
+            <tr>
+                <td style="width:11%">Id</td>
+                <td style="width:11%">First Name</td>
+                <td style="width:11%">Last Name</td>
+                <td style="width:11%">Middle Name</td>
+                <td style="width:11%">Email</td>
+                <td style="width:11%">Phone Number</td>
+                <td style="width:11%">Password</td>
+                <td style="width:11%"></td>
+                <td style="width:11%"></td>
             </tr>
-        }
-    </table>
-</div>
+            @foreach (var user in Model.Entities)
+            {
+                <tr class="border-bottom">
+                    <td style="width:11%">@user.Id</td>
+                    <td style="width:11%">@user.FirstName</td>
+                    <td style="width:11%">@user.LastName</td>
+                    <td style="width:11%">@user.MiddleName</td>
+                    <td style="width:11%">@user.Email</td>
+                    <td style="width:11%">@user.PhoneNumber</td>
+                    <td style="width:11%">@user.Password</td>
+                    <td style="width:11%"><a class="btn btn-danger mt-1 mb-1" asp-controller="UserTable" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+                    <td style="width:11%"><a class="btn btn-warning mt-1 mb-1" asp-controller="UserTable" asp-action="Update" asp-route-id="@user.Id">Update</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+}
